@@ -1,6 +1,6 @@
 const root = $("#root");
 
-// generate start page ----------------------------------------------------------------------------------
+// generate start page -----------------------------------------------------------------------------------
 function genStartPage (){
     const title = $('<h1>')
         .text("Codiene Quiz Game")
@@ -32,7 +32,15 @@ function countdown(){
     // countdown init
     let count = 60;
     setInterval(function(){
-
+        if(count >= 0){
+            timer.text(count + " seconds remaining");
+            root.append(timer);
+            count--;
+        }else{
+            reset();
+            genEndPage();
+            return;
+        }
     }, 1000);
 }
 
@@ -154,7 +162,9 @@ function genQuestionPage(){
 
 
 // generate endgame page ---------------------------------------------------------------------------------
+function genEndgamePage(){
 
+}
 
 // generate score page -----------------------------------------------------------------------------------
 
@@ -166,9 +176,10 @@ function reset(){
 
 
 
-// run app ----------------------------------------------------------------------------------------------
+// run app -----------------------------------------------------------------------------------------------
 genStartPage();
 $('.startButton').on('click', function(){
     reset();
+    countdown();
     genQuestionPage();
 });
