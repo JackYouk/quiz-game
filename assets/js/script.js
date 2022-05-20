@@ -51,114 +51,120 @@ function countdown(){
 // array of objects with quiz questions
 const questions = [
     {
-        question: "bcwjbnewc",
+        question: "cnwoncouen",
         answerA: "cwwc",
         answerB: "cewewc",
         answerC: "ecwew",
-        answerD: "wwe"
+        answerD: "wwe",
+        correct: "b"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Which technology is NOT used on the frontend?",
+        answerA: "A: jquery",
+        answerB: "B: vanilla javascript",
+        answerC: "C: css",
+        answerD: "D: solidity",
+        correct: "d"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
     {
-        question: "",
-        answerA: "",
-        answerB: "",
-        answerC: "",
-        answerD: ""
+        question: "Q",
+        answerA: "A",
+        answerB: "A",
+        answerC: "A",
+        answerD: "A",
+        correct: "a"
     },
 ];
 
+
 // question page generator
+let questionCount = 0;
+
 function genQuestionPage(){
-    const qaForm = $('<form>');
+    reset();
+    console.log(questionCount);
+    let q = $('<h2>')
+        .text(questions[questionCount].question);
+    let aA = $('<button>')
+        .addClass('answerButton')
+        .attr('value', 'a')
+        .text(questions[questionCount].answerA);
+    let aB = $('<button>')
+        .addClass('answerButton')
+        .attr('value', 'b')
+        .text(questions[questionCount].answerB);
+    let aC = $('<button>')
+        .addClass('answerButton')
+        .attr('value', 'c')
+        .text(questions[questionCount].answerC);
+    let aD = $('<button>')
+        .addClass('answerButton')
+        .attr('value', 'd')
+        .text(questions[questionCount].answerD);
 
-    for(let i = 0; i < questions.length; i++){
-        let q = $('<h2>')
-            .text(questions[i].question)
-            .addClass('question' + i);
-        
-        let rad1 = $('<input type="radio" id="A">')
-        let aa = $('<label for="A">')
-            .text(questions[i].answerA);
-
-        let rad2 = $('<input type="radio" id="B">')
-        let ab = $('<label for="B">')
-            .text(questions[i].answerB);
-
-        let rad3 = $('<input type="radio" id="C">')
-        let ac = $('<label for="C">')
-            .text(questions[i].answerC);
-
-        let rad4 = $('<input type="radio" id="D">')
-        let ad = $('<label for="D">')
-            .text(questions[i].answerD);
-
-        qaForm.append(q);
-        qaForm.append(rad1);
-        qaForm.append(aa);
-        qaForm.append(rad2);
-        qaForm.append(ab);
-        qaForm.append(rad3);
-        qaForm.append(ac);
-        qaForm.append(rad4);
-        qaForm.append(ad);
-        root.append(qaForm);
-    }
+    root.append(q);
+    root.append(aA);
+    root.append(aB);
+    root.append(aC);
+    root.append(aD);
 }
+
 
 
 // generate endgame page ---------------------------------------------------------------------------------
@@ -167,6 +173,7 @@ function genEndgamePage(){
 }
 
 // generate score page -----------------------------------------------------------------------------------
+let score = 0;
 
 
 // page reset --------------------------------------------------------------------------------------------
@@ -178,8 +185,23 @@ function reset(){
 
 // run app -----------------------------------------------------------------------------------------------
 genStartPage();
-$('.startButton').on('click', function(){
+$(root).on('click', '.startButton', function(){
     reset();
     countdown();
     genQuestionPage();
+});
+
+$(root).on('click', '.answerButton', function(event){
+    if($(event.target).attr('value') === questions[questionCount].correct){
+        let notifyCorrect = $('<p>').text("correct!");
+        root.append(notifyCorrect);
+        questionCount++;
+        score++;
+        setTimeout(genQuestionPage, 1500);
+    }else{
+        let notifyIncorrect = $('<p>').text("incorrect!");
+        root.append(notifyIncorrect);
+        questionCount++;
+        setTimeout(genQuestionPage, 1500);
+    }
 });
