@@ -2,6 +2,7 @@ const root = $("#root");
 
 // generate start page -----------------------------------------------------------------------------------
 function genStartPage (){
+    reset();
     const title = $('<h1>')
         .text("Codiene Quiz Game")
         .addClass('title');
@@ -43,6 +44,7 @@ function countdown(){
             root.append(timer);
             count--;
         }else{
+            reset();
             genEndgamePage();
             return;
         }
@@ -63,7 +65,7 @@ const questions = [
         correct: "b"
     },
     {
-        question: "Q",
+        question: "Q2",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -71,7 +73,7 @@ const questions = [
         correct: "a"
     },
     {
-        question: "Q",
+        question: "Q3",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -87,7 +89,7 @@ const questions = [
         correct: "d"
     },
     {
-        question: "Q",
+        question: "Q5",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -95,7 +97,7 @@ const questions = [
         correct: "a"
     },
     {
-        question: "Q",
+        question: "Q6",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -103,7 +105,7 @@ const questions = [
         correct: "a"
     },
     {
-        question: "Q",
+        question: "Q7",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -111,7 +113,7 @@ const questions = [
         correct: "a"
     },
     {
-        question: "Q",
+        question: "Q8",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -119,7 +121,7 @@ const questions = [
         correct: "a"
     },
     {
-        question: "Q",
+        question: "Q9",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -127,7 +129,7 @@ const questions = [
         correct: "a"
     },
     {
-        question: "Q",
+        question: "Q10",
         answerA: "A",
         answerB: "A",
         answerC: "A",
@@ -142,49 +144,99 @@ let questionCount = 0;
 
 function genQuestionPage(){
     reset();
-    let q = $('<h2>')
-        .text(questions[questionCount].question);
-    let aA = $('<button>')
-        .addClass('answerButton')
-        .attr('value', 'a')
-        .text(questions[questionCount].answerA);
-    let aB = $('<button>')
-        .addClass('answerButton')
-        .attr('value', 'b')
-        .text(questions[questionCount].answerB);
-    let aC = $('<button>')
-        .addClass('answerButton')
-        .attr('value', 'c')
-        .text(questions[questionCount].answerC);
-    let aD = $('<button>')
-        .addClass('answerButton')
-        .attr('value', 'd')
-        .text(questions[questionCount].answerD);
+    if(questionCount === questions.length){
+        count = -1;
+        genEndgamePage();
+    }else{
+        let q = $('<h2>')
+            .text(questions[questionCount].question);
+        let aA = $('<button>')
+            .addClass('answerButton')
+            .attr('value', 'a')
+            .text(questions[questionCount].answerA);
+        let aB = $('<button>')
+            .addClass('answerButton')
+            .attr('value', 'b')
+            .text(questions[questionCount].answerB);
+        let aC = $('<button>')
+            .addClass('answerButton')
+            .attr('value', 'c')
+            .text(questions[questionCount].answerC);
+        let aD = $('<button>')
+            .addClass('answerButton')
+            .attr('value', 'd')
+            .text(questions[questionCount].answerD);
 
-    root.append(q);
-    root.append(aA);
-    root.append(aB);
-    root.append(aC);
-    root.append(aD);
+        root.append(q);
+        root.append(aA);
+        root.append(aB);
+        root.append(aC);
+        root.append(aD);
+    }
+}
+
+// generate high scores page -----------------------------------------------------------------------------------
+let score = 0;
+let savedScores = [];
+let isScoreSaved = false;
+
+// saves score to array
+function save(){
+    let nameInput = prompt('Enter the name you would like the score to saved under');
+    savedScores.push({
+        name: nameInput,
+        scoreSaved: score
+    });
+    isScoreSaved = true;
+    // localStorage.content() = savedScores;
+}
+
+function genScoresPage(){
+    reset();
+    const scoresPageHeader = $('<h2>')
+        .text('High Scores');
+    const scoresContainer = $('<ul>')
+        .addClass('list-group')
+    
+    if(isScoreSaved){
+        for(i = 0; i < savedScores.length; i++){
+            let scoreLi = $('<li>')
+                .addClass('list-group-item')
+                .text(`${savedScores[i].name} answered ${savedScores[i].scoreSaved} questions correctly.`);
+            scoresContainer.append(scoreLi);
+        }
+    }else{
+        let scoreLi = $('<li>')
+                .addClass('list-group-item')
+                .text('There are no saved scores.');
+        scoresContainer.append(scoreLi);
+    }
+    
+    root.append(scoresPageHeader);
+    root.append(scoresContainer);
 }
 
 
 
 // generate endgame page ---------------------------------------------------------------------------------
-let score = 0;
 function genEndgamePage(){
+    reset();
     const scoreHeader = $('<h1>')
         .text(`You Answered ${score} Questions Correctly!`);
-    const highScoresContainer = $('<div>');
+    const saveScoreBtn = $('<button>')
+        .text('Save Score')
+        .addClass('saveBtn');
     const playAgainBtn = $('<button>')
-        .text('Play Again');
+        .text('Play Again')
+        .addClass('againButton');
     const scoresButton = $('<button>')
-        .text("High Scores");
-}
+        .text("High Scores")
+        .addClass('scoresButton');
 
-// generate high scores page -----------------------------------------------------------------------------------
-function generateScoresPage(){
-    
+    root.append(scoreHeader);
+    root.append(saveScoreBtn);
+    root.append(playAgainBtn);
+    root.append(scoresButton);
 }
 
 
@@ -211,21 +263,27 @@ $(root).on('click', '.startButton', function(){
 
 // when a answer button is clicked and there are still questions left: respond with correct/not correct, increase score, and generate new question page
 $(root).on('click', '.answerButton', function(event){
-    if(questionCount === questions.length - 1){
-        genEndgamePage();
-    }else if($(event.target).attr('value') === questions[questionCount].correct){
+    if($(event.target).attr('value') === questions[questionCount].correct){
         let notifyCorrect = $('<p>').text("correct!");
         root.append(notifyCorrect);
         questionCount++;
         score++;
-        setTimeout(genQuestionPage, 1500);
+        setTimeout(genQuestionPage, 700);
     }else if($(event.target).attr('value') !== questions[questionCount].correct){
         let notifyIncorrect = $('<p>').text("incorrect!");
         root.append(notifyIncorrect);
         questionCount++;
-        setTimeout(genQuestionPage, 1500);
+        setTimeout(genQuestionPage, 700);
     }else{
         return;
     }
-    
 });
+
+// when a save score button is clicked: save score
+$(root).on('click', '.saveBtn', save);
+
+// when a high scores button is clicked: generate high score page
+$(root).on('click', '.scoresButton', genScoresPage);
+
+// when a play again button is clicked: go back to start screen
+$(root).on('click', '.againButton', genStartPage);
