@@ -38,7 +38,7 @@ function countdown(){
     const timer = $('<div>');
     
     // countdown init
-    setInterval(function(){
+    let interval = setInterval(function(){
         if(count >= 0){
             timer.text(count + " seconds remaining");
             root.append(timer);
@@ -46,6 +46,7 @@ function countdown(){
         }else{
             reset();
             genEndgamePage();
+            clearInterval(interval);
             return;
         }
     }, 1000);
