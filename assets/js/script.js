@@ -198,6 +198,9 @@ function genScoresPage(){
         .text('High Scores');
     const scoresContainer = $('<ul>')
         .addClass('list-group')
+    const againBtn = $('<button>')
+        .addClass('againButton')
+        .text('Play Again');
     
     if(isScoreSaved){
         for(i = 0; i < savedScores.length; i++){
@@ -215,6 +218,7 @@ function genScoresPage(){
     
     root.append(scoresPageHeader);
     root.append(scoresContainer);
+    root.append(againBtn);
 }
 
 
@@ -248,16 +252,24 @@ function reset(){
     root.empty();
 }
 
+function resetQuestionCount(){
+    questionCount = 0;
+}
+
+function resetScore(){
+    score = 0;
+}
 
 
-// run app -----------------------------------------------------------------------------------------------
-// generates the home screen/ start page
-genStartPage();
+
+// event listeners ---------------------------------------------------------------------------------------
 
 // if start button is clicked: start the countdown and generate the first question page
 $(root).on('click', '.startButton', function(){
     reset();
     resetCount();
+    resetScore();
+    resetQuestionCount();
     countdown();
     genQuestionPage();
 });
@@ -288,3 +300,8 @@ $(root).on('click', '.scoresButton', genScoresPage);
 
 // when a play again button is clicked: go back to start screen
 $(root).on('click', '.againButton', genStartPage);
+
+
+// run app -----------------------------------------------------------------------------------------------
+// generates the home screen/ start page
+genStartPage();
