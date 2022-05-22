@@ -4,7 +4,7 @@ const root = $("#root");
 function genStartPage (){
     reset();
     const title = $('<h1>')
-        .text("Codiene Quiz Game")
+        .text("Coding Quiz Game")
         .addClass('title');
 
     const description = $('<p>')
@@ -40,7 +40,9 @@ function countdown(){
     // countdown init
     let interval = setInterval(function(){
         if(count >= 0){
-            timer.text(count + " seconds remaining");
+            timer
+                .addClass('badge text-bg-dark')
+                .text(count + " seconds remaining");
             root.append(timer);
             count--;
         }else{
@@ -58,83 +60,83 @@ function countdown(){
 // array of objects with quiz questions
 const questions = [
     {
-        question: "cnwoncouen",
-        answerA: "cwwc",
-        answerB: "cewewc",
-        answerC: "ecwew",
-        answerD: "wwe",
+        question: "1. What does HTML stand for?",
+        answerA: "Hippie Train Migration League",
+        answerB: "Hyper-Text Markup Language",
+        answerC: "Hemi-Tech Main Language",
+        answerD: "Hot Teal Meal Last",
         correct: "b"
     },
     {
-        question: "Q2",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
+        question: "2. What does CSS stand for?",
+        answerA: "Cascading Style Sheets",
+        answerB: "Cumalative Standard Style",
+        answerC: "Cool Stacked Sheets",
+        answerD: "Cash Stone Steel",
         correct: "a"
     },
     {
-        question: "Q3",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
-        correct: "a"
+        question: "3. What is NOT a correct format for a function (x) in JavaScript?",
+        answerA: "function x(){}",
+        answerB: "const x = function(){}",
+        answerC: "x() funct={}",
+        answerD: "let x()=>{}",
+        correct: "c"
     },
     {
-        question: "Which technology is NOT used on the frontend?",
+        question: "4. Which technology is NOT used on the frontend?",
         answerA: "A: jquery",
         answerB: "B: vanilla javascript",
         answerC: "C: css",
-        answerD: "D: solidity",
+        answerD: "D: noSQL",
         correct: "d"
     },
     {
-        question: "Q5",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
+        question: "5. What are the FAANG companies?",
+        answerA: "FaceBook, Apple, Amazon, Netflix, and Google",
+        answerB: "Fandago, AppleBees, AmericanExpress, Nautica, and Gatorade",
+        answerC: "Those companies that illegally sell poached tiger fangs?",
+        answerD: "Freemasons, Alaskan Airlines, NewEnglandPatriots, GermanAuto",
         correct: "a"
     },
     {
-        question: "Q6",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
+        question: "6. What is the name of the founder of Twitter?",
+        answerA: "Jason Dunn",
+        answerB: "Elon Musk",
+        answerC: "Mark Zuccerberg",
+        answerD: "Jack Dorsey",
+        correct: "d"
+    },
+    {
+        question: "7. Are Java and JavaScript the same language?",
+        answerA: "Yes",
+        answerB: "No",
+        answerC: "Maybe",
+        answerD: "IDK",
+        correct: "b"
+    },
+    {
+        question: "8. Why do programmers use darkmode?",
+        answerA: "It's easier on the eyes",
+        answerB: "Lightmode is too bright",
+        answerC: "Because bugs are attracted to light",
+        answerD: "It looks better",
+        correct: "c"
+    },
+    {
+        question: "9. What is the name of the largest programming expo hosted in Oakland during the month of February?",
+        answerA: "Dev Week",
+        answerB: "Hackola",
+        answerC: "Veecon",
+        answerD: "Code Expo",
         correct: "a"
     },
     {
-        question: "Q7",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
-        correct: "a"
-    },
-    {
-        question: "Q8",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
-        correct: "a"
-    },
-    {
-        question: "Q9",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
-        correct: "a"
-    },
-    {
-        question: "Q10",
-        answerA: "A",
-        answerB: "A",
-        answerC: "A",
-        answerD: "A",
+        question: "10. Who programmed this quiz game?",
+        answerA: "Jack Youkstetter",
+        answerB: "Me",
+        answerC: "Elon Musk",
+        answerD: "The Queen of England",
         correct: "a"
     },
 ];
@@ -199,7 +201,7 @@ function genScoresPage(){
     const scoresContainer = $('<ul>')
         .addClass('list-group')
     const againBtn = $('<button>')
-        .addClass('againButton')
+        .addClass('againButton btn btn-secondary m-3')
         .text('Play Again');
     
     if(isScoreSaved){
@@ -230,13 +232,13 @@ function genEndgamePage(){
         .text(`You Answered ${score} Questions Correctly!`);
     const saveScoreBtn = $('<button>')
         .text('Save Score')
-        .addClass('saveBtn');
+        .addClass('saveBtn btn btn-primary m-2');
     const playAgainBtn = $('<button>')
         .text('Play Again')
-        .addClass('againButton');
+        .addClass('againButton btn btn-secondary m-2');
     const scoresButton = $('<button>')
         .text("High Scores")
-        .addClass('scoresButton');
+        .addClass('scoresButton btn btn-info m-2');
 
     root.append(scoreHeader);
     root.append(saveScoreBtn);
