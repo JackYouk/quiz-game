@@ -13,11 +13,11 @@ function genStartPage (){
 
     const startButton = $('<button>')
         .text("Start")
-        .addClass('startButton');
+        .addClass('startButton btn btn-success m-3');
 
     const scoresButton = $('<button>')
         .text("High Scores")
-        .addClass('scoresButton');
+        .addClass('scoresButton btn btn-info m-3');
 
     root.append(title);
     root.append(description);
@@ -152,19 +152,19 @@ function genQuestionPage(){
         let q = $('<h2>')
             .text(questions[questionCount].question);
         let aA = $('<button>')
-            .addClass('answerButton')
+            .addClass('answerButton btn btn-outline-primary m-2')
             .attr('value', 'a')
             .text(questions[questionCount].answerA);
         let aB = $('<button>')
-            .addClass('answerButton')
+            .addClass('answerButton btn btn-outline-primary m-2')
             .attr('value', 'b')
             .text(questions[questionCount].answerB);
         let aC = $('<button>')
-            .addClass('answerButton')
+            .addClass('answerButton btn btn-outline-primary m-2')
             .attr('value', 'c')
             .text(questions[questionCount].answerC);
         let aD = $('<button>')
-            .addClass('answerButton')
+            .addClass('answerButton btn btn-outline-primary m-2')
             .attr('value', 'd')
             .text(questions[questionCount].answerD);
 
@@ -277,13 +277,17 @@ $(root).on('click', '.startButton', function(){
 // when a answer button is clicked and there are still questions left: respond with correct/not correct, increase score, and generate new question page
 $(root).on('click', '.answerButton', function(event){
     if($(event.target).attr('value') === questions[questionCount].correct){
-        let notifyCorrect = $('<p>').text("correct!");
+        let notifyCorrect = $('<p>')
+            .addClass("alert alert-success")
+            .text("correct!");
         root.append(notifyCorrect);
         questionCount++;
         score++;
         setTimeout(genQuestionPage, 700);
     }else if($(event.target).attr('value') !== questions[questionCount].correct){
-        let notifyIncorrect = $('<p>').text("incorrect!");
+        let notifyIncorrect = $('<p>')
+            .addClass("alert alert-danger")
+            .text("incorrect!");
         root.append(notifyIncorrect);
         questionCount++;
         setTimeout(genQuestionPage, 700);
